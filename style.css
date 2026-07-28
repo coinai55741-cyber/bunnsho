@@ -120,9 +120,9 @@ body:has(#view-story.active) .app-container {
 /* Header & Glitch Text */
 header {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
     position: relative;
-    min-height: 96px;
+    min-height: auto;
 }
 
 .return-list-btn {
@@ -659,7 +659,7 @@ header {
 /* Next / Continue Controls */
 .controls-panel {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-top: 15px;
 }
@@ -996,7 +996,7 @@ header {
 #view-start,
 #view-game,
 #view-results {
-    padding-top: 76px;
+    padding-top: 30px;
 }
 
 .story-topbar {
@@ -1690,9 +1690,44 @@ header {
         justify-content: flex-start;
     }
 
+    .app-container > header {
+        display: none !important;
+    }
+
     header {
-        min-height: 132px;
-        padding-top: 36px;
+        min-height: auto;
+        padding-top: 0;
+    }
+
+    #view-start,
+    #view-game,
+    #view-results {
+        padding-top: 40px !important;
+    }
+
+    .progress-indicator {
+        margin: 5px auto 15px auto !important;
+    }
+
+    .cyber-panel {
+        padding: 15px !important;
+    }
+
+    .sentence-container {
+        margin-bottom: 15px !important;
+    }
+
+    .patch-panel {
+        padding: 12px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .audio-panel {
+        margin-bottom: 15px !important;
+    }
+
+    .leaderboard-list {
+        max-height: 280px !important;
     }
 
     .return-list-btn {
@@ -1778,4 +1813,21 @@ header {
         width: 100%;
     }
 }
+
+/* Global Toolbar positioning */
+.global-toolbar {
+    position: fixed !important;
+    top: 20px !important;
+    left: 20px !important;
+    z-index: 9999 !important;
+}
+
+.lb-medal-img {
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;
+    margin-right: 6px;
+    object-fit: contain;
+}
+
 

@@ -1023,6 +1023,8 @@ const resultsSoundBtn = document.getElementById('results-sound-btn');
 
 
 const playAudioBtn = document.getElementById('play-audio-btn');
+const globalReturnListBtn = document.getElementById('global-return-list-btn');
+const globalSoundBtn = document.getElementById('global-sound-btn');
 
 
 
@@ -3407,7 +3409,11 @@ const DUMMY_LEADERBOARD = [
 
 const DUMMY_STATS = { participants: 1905, plays: 5051 };
 
-const LB_MEDALS = { 1: '🥇', 2: '🥈', 3: '🥉' };
+const LB_MEDALS = {
+    1: '<img src="assets/ui/icon_rank1.png" class="lb-medal-img" alt="">',
+    2: '<img src="assets/ui/icon_rank2.png" class="lb-medal-img" alt="">',
+    3: '<img src="assets/ui/icon_rank3.png" class="lb-medal-img" alt="">'
+};
 
 function formatLeaderboardTime(totalSeconds) {
     const safeSeconds = Math.max(0, Number(totalSeconds) || 0);
@@ -3429,8 +3435,9 @@ function renderLeaderboard(playerScore, playerTimeSeconds = 0) {
         const rank = idx + 1;
         const row = document.createElement('div');
         row.className = `leaderboard-row lb-row ${rank <= 3 ? 'rank-' + rank : ''}`;
+        const rankContent = LB_MEDALS[rank] ? `<span class="lb-medal">${LB_MEDALS[rank]}</span>` : rank;
         row.innerHTML = `
-            <span class="lb-col lb-rank-num">${LB_MEDALS[rank] ? `<span class="lb-medal">${LB_MEDALS[rank]}</span>` : ''}${rank}</span>
+            <span class="lb-col lb-rank-num">${rankContent}</span>
             <span class="lb-col lb-col-name">${entry.name}</span>
             <span class="lb-col lb-col-time">${formatLeaderboardTime(entry.time)}</span>
             <span class="lb-col lb-col-score">${entry.score}</span>
@@ -3910,7 +3917,7 @@ if (storySkipBtn) {
 
 
 
-const soundToggleButtons = [storySoundBtn, startSoundBtn, gameSoundBtn, resultsSoundBtn].filter(Boolean);
+const soundToggleButtons = [storySoundBtn, startSoundBtn, gameSoundBtn, resultsSoundBtn, globalSoundBtn].filter(Boolean);
 
 
 
@@ -3944,6 +3951,19 @@ if (startReturnListBtn) {
         storySceneIndex = 0;
         renderStoryScene();
         showView('story');
+    });
+}
+
+if (globalReturnListBtn) {
+    globalReturnListBtn.addEventListener('click', () => {
+        playSFX('click');
+        if (views.start && views.start.classList.contains('active')) {
+            storySceneIndex = 0;
+            renderStoryScene();
+            showView('story');
+        } else {
+            returnToMissionList();
+        }
     });
 }
 
@@ -4190,17 +4210,14 @@ restartGameBtn.addEventListener('click', () => {
 
 
 // 返回主選單（遊戲中途放棄）
-backToMenuBtn.addEventListener('click', () => {
-
-    playSFX('click');
-
-    stopTimer();
-
-    stopAudio();
-
-    showView('start');
-
-});
+if (backToMenuBtn) {
+    backToMenuBtn.addEventListener('click', () => {
+        playSFX('click');
+        stopTimer();
+        stopAudio();
+        showView('start');
+    });
+}
 
 
 

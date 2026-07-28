@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Global Toolbar -->
+    <div class="story-toolbar global-toolbar">
+        <button class="story-toolbar-btn return-list-btn" id="global-return-list-btn" type="button" aria-label="返回列表">
+            <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
+            <span>返回列表</span>
+        </button>
+        <button class="story-toolbar-btn sound-toggle-btn" id="global-sound-btn" type="button" aria-label="音效">
+            <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
+            <span>音效</span>
+        </button>
+    </div>
+
     <!-- Background Grid -->
     <div class="bg-grid"></div>
 
@@ -18,7 +30,7 @@
         </header>
 
         <!-- HUD SECTION (Visible during gameplay) -->
-        <div class="hud-container" id="game-hud" style="display: none;">
+        <div class="hud-container" id="game-hud" style="display: none !important;">
             <div class="hud-item" style="display: none;">
                 <div class="hud-label">系統完整度</div>
                 <div class="hud-value" id="hud-hp">100%</div>
@@ -26,25 +38,14 @@
                     <div class="integrity-bar-fill" id="hp-bar-fill"></div>
                 </div>
             </div>
-            <div class="hud-item" style="text-align: right; align-items: flex-end; justify-content: center;">
+            <div class="hud-item" style="display: none;">
                 <div class="hud-label">解密計時</div>
-                <div class="hud-value" id="hud-timer" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.6rem; letter-spacing: 1px;">00:00.000</div>
+                <div class="hud-value" id="hud-timer-old" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.6rem; letter-spacing: 1px;">00:00.000</div>
             </div>
         </div>
 
         <!-- 1. START SCREEN -->
         <div class="cyber-panel game-view" id="view-start" style="text-align: center;">
-            <header class="story-toolbar panel-toolbar" aria-label="開始頁工具列">
-                <button class="story-toolbar-btn return-list-btn" id="start-return-list-btn" type="button" aria-label="返回列表">
-                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
-                    <span>返回列表</span>
-                </button>
-                <button class="story-toolbar-btn sound-toggle-btn" id="start-sound-btn" type="button" aria-label="音效">
-                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
-                    <span>音效</span>
-                </button>
-            </header>
-
             <div class="terminal-title">> 系統數據修復協定已啟動...</div>
             
             <div class="intro-media">
@@ -90,16 +91,6 @@
         <!-- 2. STORY INTRO SCREEN -->
         <div class="game-view story-view active" id="view-story" aria-live="polite">
             <div class="story-bg-layer"></div>
-            <header class="story-toolbar" aria-label="前導故事工具列">
-                <button class="story-toolbar-btn return-list-btn" id="story-return-list-btn" type="button" aria-label="返回列表">
-                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
-                    <span>返回列表</span>
-                </button>
-                <button class="story-toolbar-btn sound-toggle-btn" id="story-sound-btn" type="button" aria-label="音效">
-                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
-                    <span>音效</span>
-                </button>
-            </header>
             <img class="story-figure" id="story-figure-img" src="assets/images/story-terminal.png" alt="">
             <div class="story-dialog">
                 <div class="story-speaker">
@@ -120,20 +111,15 @@
 
         <!-- 2. GAMEPLAY SCREEN -->
         <div class="cyber-panel game-view" id="view-game">
-            <header class="story-toolbar panel-toolbar" aria-label="遊戲工具列">
-                <button class="story-toolbar-btn return-list-btn" id="game-return-list-btn" type="button" aria-label="返回列表">
-                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
-                    <span>返回列表</span>
-                </button>
-                <button class="story-toolbar-btn sound-toggle-btn" id="game-sound-btn" type="button" aria-label="音效">
-                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
-                    <span>音效</span>
-                </button>
-            </header>
-
             <!-- Central Progress Indicator -->
             <div class="progress-indicator">
-                <div class="progress-text">進度：第 <span id="progress-current">1</span> / 10 題</div>
+                <div class="progress-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
+                    <div class="progress-text" style="margin-bottom: 0;">進度：第 <span id="progress-current">1</span> / 10 題</div>
+                    <div class="hud-item-mini" style="display: flex; align-items: center; gap: 6px;">
+                        <span class="hud-label-mini" style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: var(--neon-blue); text-transform: uppercase;">計時：</span>
+                        <span class="hud-value-mini" id="hud-timer" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px;">00:00.000</span>
+                    </div>
+                </div>
                 <div class="progress-track">
                     <div class="progress-bar" id="progress-bar-fill"></div>
                 </div>
@@ -208,23 +194,13 @@
 
         <!-- 4. RESULTS / SUCCESS SCREEN -->
         <div class="cyber-panel game-view results-panel" id="view-results">
-            <header class="story-toolbar panel-toolbar" aria-label="排行榜工具列">
-                <button class="story-toolbar-btn return-list-btn" id="results-return-list-btn" type="button" aria-label="返回列表">
-                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
-                    <span>返回列表</span>
-                </button>
-                <button class="story-toolbar-btn sound-toggle-btn" id="results-sound-btn" type="button" aria-label="音效">
-                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
-                    <span>音效</span>
-                </button>
-            </header>
 
             <div class="terminal-title" style="margin: 0 auto 20px auto;">
                 > 解密完成 // 資料庫安全已確認
             </div>
             
             <h2 style="font-size: 2.2rem; color: var(--neon-green); margin-bottom: 20px; font-family: 'Orbitron', sans-serif;">
-                任務完成！
+                任務結束！
             </h2>
 
             <img src="assets/images/S2_m1_result5.png" alt="特工結果表情" class="result-avatar-img" id="res-avatar">
@@ -287,12 +263,12 @@
     <div class="commander-overlay-mask" id="commander-alert-overlay" style="display: none;">
         <div class="commander-modal-panel">
             <div class="terminal-title" style="color: var(--neon-gold); border-color: var(--neon-gold); margin-bottom: 20px;">
-                > 核心提示 // 網安指揮中心連線中...
+                > 核心提示 // 資安指揮中心連線中...
             </div>
             <div class="commander-avatar-wrapper">
                 <img src="assets/images/S2_m1_commander_haed.png" alt="Commander Aya" class="commander-avatar-img">
             </div>
-            <div class="commander-title">網安指揮官 方口獅</div>
+            <div class="commander-title">資安指揮官 方口獅</div>
             <div class="commander-message-text">
                 「特工注意！病毒變得更狡猾了，它釋放了偽裝代碼！其中只有 1 個是真的病毒（錯誤拚音），其他都是干擾你的假警示喔！」
             </div>
