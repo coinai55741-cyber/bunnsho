@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數據駭客 (Data Hacker) // 客語防禦戰</title>
+    <meta name="description" content="一個以駭客為主題的客語學習遊戲。找出錯誤的拼音並進行修補，拯救受損的客語資料庫！">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Grid -->
+    <div class="bg-grid"></div>
+
+    <div class="app-container" id="app-root">
+        <!-- HEADER -->
+        <header>
+            <h1 class="glitch-title" data-text="數據駭客">數據<span>駭客</span></h1>
+        </header>
+
+        <!-- HUD SECTION (Visible during gameplay) -->
+        <div class="hud-container" id="game-hud" style="display: none;">
+            <div class="hud-item" style="display: none;">
+                <div class="hud-label">系統完整度</div>
+                <div class="hud-value" id="hud-hp">100%</div>
+                <div class="integrity-bar-bg">
+                    <div class="integrity-bar-fill" id="hp-bar-fill"></div>
+                </div>
+            </div>
+            <div class="hud-item" style="text-align: right; align-items: flex-end; justify-content: center;">
+                <div class="hud-label">解密計時</div>
+                <div class="hud-value" id="hud-timer" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.6rem; letter-spacing: 1px;">00:00.000</div>
+            </div>
+        </div>
+
+        <!-- 1. START SCREEN -->
+        <div class="cyber-panel game-view" id="view-start" style="text-align: center;">
+            <header class="story-toolbar panel-toolbar" aria-label="開始頁工具列">
+                <button class="story-toolbar-btn return-list-btn" id="start-return-list-btn" type="button" aria-label="返回列表">
+                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
+                    <span>返回列表</span>
+                </button>
+                <button class="story-toolbar-btn sound-toggle-btn" id="start-sound-btn" type="button" aria-label="音效">
+                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
+                    <span>音效</span>
+                </button>
+            </header>
+
+            <div class="terminal-title">> 系統數據修復協定已啟動...</div>
+            
+            <div class="intro-media">
+                <img src="assets/images/retro_cyber_radio.png" class="retro-radio-img" alt="復古唱片收音機">
+            </div>
+
+            <div class="story-box">
+                <p class="story-text">
+                    📀 老舊的客語資料庫系統正嚴重損壞，客語文化紀錄產生大面積亂碼！你手裡唯一的線索，是長輩留下的類比黑膠錄音帶。立刻戴上耳機、監聽正確的客語讀音，抓出螢幕上被系統錯植的拼音。在訊號完全中斷前，把家鄉的聲音搶救回來！<br>
+                    <span style="color: var(--neon-gold); font-weight: bold; font-size: 0.85rem;">⚠️ 請特工在修復前，至課程專區I-III的區域培訓呦！</span>
+                </p>
+                <div class="rules-box">
+                    <div class="rule-title">🎧 特工任務說明</div>
+                    <ul class="rule-list">
+                        <li><strong>1. </strong>播放播音鈕，聆聽客語聲音</li>
+                        <li><strong>2. </strong>箭頭比對除錯，檢查拼音字卡</li>
+                        <li><strong>3. </strong>點選錯誤字卡（每題只有 1 個錯誤喔！），並在下方補丁區選擇正確拼字字母還原</li>
+                        <li><strong>4. 關卡題數：</strong>總共 10 題，每題 10 分，共 100 分（一題最多錯 5 次喔！）</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 腔調選擇器 (Dialect Selector Only) -->
+            <div class="lesson-selector-container">
+                <div class="lesson-selector-title">
+                    <span>> 選擇要修復的腔調數據庫 (Dialect)</span>
+                </div>
+                <div class="select-group">
+                    <select id="game-dialect-select" class="cyber-select">
+                        <option value="sixian">四縣腔 (Sixian)</option>
+                        <option value="hailu">海陸腔 (Hailu)</option>
+                        <option value="dabu">大埔腔 (Dabu)</option>
+                        <option value="raoping">饒平腔 (Raoping)</option>
+                        <option value="zhaoan">詔安腔 (Zhaoan)</option>
+                        <option value="southsixian">南四縣腔 (Southsixian)</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="cyber-btn confirm-btn" id="start-game-btn" style="max-width: 350px; margin: 20px auto 0 auto;">開始修復</button>
+        </div>
+
+        <!-- 2. STORY INTRO SCREEN -->
+        <div class="game-view story-view active" id="view-story" aria-live="polite">
+            <div class="story-bg-layer"></div>
+            <header class="story-toolbar" aria-label="前導故事工具列">
+                <button class="story-toolbar-btn return-list-btn" id="story-return-list-btn" type="button" aria-label="返回列表">
+                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
+                    <span>返回列表</span>
+                </button>
+                <button class="story-toolbar-btn sound-toggle-btn" id="story-sound-btn" type="button" aria-label="音效">
+                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
+                    <span>音效</span>
+                </button>
+            </header>
+            <img class="story-figure" id="story-figure-img" src="assets/images/story-terminal.png" alt="">
+            <div class="story-dialog">
+                <div class="story-speaker">
+                    <div class="story-avatar-wrap">
+                        <img id="story-avatar-img" src="assets/images/story-system-head.png" alt="">
+                    </div>
+                    <div class="story-speaker-name" id="story-speaker-name">系統</div>
+                </div>
+                <div class="story-copy" id="story-copy">
+                    系統提示：「警告！客語數據磁區 01 正在遭受 Glitch-Virus 病毒覆寫...」
+                </div>
+                <div class="story-actions">
+                    <button class="story-secondary-btn" id="story-skip-btn" type="button">跳過對話</button>
+                    <button class="story-next-btn" id="story-continue-btn" type="button">繼續 ›</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. GAMEPLAY SCREEN -->
+        <div class="cyber-panel game-view" id="view-game">
+            <header class="story-toolbar panel-toolbar" aria-label="遊戲工具列">
+                <button class="story-toolbar-btn return-list-btn" id="game-return-list-btn" type="button" aria-label="返回列表">
+                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
+                    <span>返回列表</span>
+                </button>
+                <button class="story-toolbar-btn sound-toggle-btn" id="game-sound-btn" type="button" aria-label="音效">
+                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
+                    <span>音效</span>
+                </button>
+            </header>
+
+            <!-- Central Progress Indicator -->
+            <div class="progress-indicator">
+                <div class="progress-text">進度：第 <span id="progress-current">1</span> / 10 題</div>
+                <div class="progress-track">
+                    <div class="progress-bar" id="progress-bar-fill"></div>
+                </div>
+            </div>
+
+            <!-- Audio Node Playback -->
+            <div class="audio-panel">
+                <button class="audio-btn" id="play-audio-btn" aria-label="播放備份語音">
+                    <span>▶</span>
+                </button>
+                <div>
+                    <div class="audio-label">> 類比語音備份訊號</div>
+                    <div class="audio-label" style="font-size: 0.7rem; color: #718096; margin-top: 2px;">
+                        點擊播放正確客語讀音，以此比對受損的數位代碼。
+                    </div>
+                </div>
+                <div class="audio-waveform">
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                    <div class="wave-bar"></div>
+                </div>
+            </div>
+
+            <!-- Main Data Sentence rendering -->
+            <div class="sentence-container" id="sentence-box">
+                <!-- Word Cards will be dynamically injected here -->
+            </div>
+
+            <!-- Option Select Panel (Patch Terminal) -->
+            <div class="patch-panel" id="patch-terminal">
+                <div class="patch-header">
+                    <span>> 修補終端 // 選擇修正補丁</span>
+                    <span id="patch-card-indicator" style="color: var(--neon-gold);">已選擇字卡：無</span>
+                </div>
+                <div class="patch-options" id="options-box">
+                    <button class="patch-opt-btn">Patch A</button>
+                    <button class="patch-opt-btn">Patch B</button>
+                    <button class="patch-opt-btn">Patch C</button>
+                    <button class="patch-opt-btn">Patch D</button>
+                </div>
+            </div>
+
+            <!-- Feedback Overlay -->
+            <div class="feedback-overlay">
+                <span class="feedback-text" id="feedback-display">偵測到受損代碼</span>
+            </div>
+
+            <!-- Controls Panel -->
+            <div class="controls-panel">
+                <div class="next-action-container">
+                    <button class="cyber-btn next-btn" id="next-question-btn">下一題 ></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. GAME OVER SCREEN (COMPROMISED) -->
+        <div class="cyber-panel game-view" id="view-gameover" style="text-align: center;">
+            <div class="terminal-title" style="color: var(--neon-red); border-color: var(--neon-red); margin: 0 auto 20px auto;">
+                > 嚴重錯誤：連線已中斷
+            </div>
+            <h2 style="font-size: 2.2rem; color: var(--neon-red); margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">
+                系統完整度 0%
+            </h2>
+            <p style="color: #a0aec0; margin-bottom: 30px; font-size: 0.95rem;">
+                系統資料庫損毀過度，防火牆已強行阻斷連線。修復失敗。
+            </p>
+            <button class="cyber-btn" id="retry-gameover-btn" style="max-width: 300px; margin: 0 auto;">重新建立連線</button>
+        </div>
+
+        <!-- 4. RESULTS / SUCCESS SCREEN -->
+        <div class="cyber-panel game-view results-panel" id="view-results">
+            <header class="story-toolbar panel-toolbar" aria-label="排行榜工具列">
+                <button class="story-toolbar-btn return-list-btn" id="results-return-list-btn" type="button" aria-label="返回列表">
+                    <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
+                    <span>返回列表</span>
+                </button>
+                <button class="story-toolbar-btn sound-toggle-btn" id="results-sound-btn" type="button" aria-label="音效">
+                    <img src="assets/images/sound-icon.svg" alt="" aria-hidden="true">
+                    <span>音效</span>
+                </button>
+            </header>
+
+            <div class="terminal-title" style="margin: 0 auto 20px auto;">
+                > 解密完成 // 資料庫安全已確認
+            </div>
+            
+            <h2 style="font-size: 2.2rem; color: var(--neon-green); margin-bottom: 20px; font-family: 'Orbitron', sans-serif;">
+                任務完成！
+            </h2>
+
+            <img src="assets/images/S2_m1_result5.png" alt="特工結果表情" class="result-avatar-img" id="res-avatar">
+
+            <!-- 評價評語區塊 -->
+            <div class="result-comment-box" style="margin-top: 20px; padding: 15px; border: 1px solid var(--panel-border); background: rgba(0, 240, 255, 0.05); border-radius: 4px; text-align: left;">
+                <div class="hud-label" style="color: var(--neon-gold); font-size: 0.8rem; margin-bottom: 5px;">> 系統分析評價</div>
+                <div id="res-comment" style="color: var(--text-color); font-size: 1rem; line-height: 1.5; font-family: 'Share Tech Mono', monospace;">評價載入中...</div>
+            </div>
+
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="hud-label">安全評級</div>
+                    <div class="result-val rank" id="res-rank">防禦組巡邏兵</div>
+                </div>
+                <div class="result-card" style="display: none;">
+                    <div class="hud-label">最終完整度</div>
+                    <div class="result-val" id="res-hp" style="color: var(--neon-green);">100%</div>
+                </div>
+                <div class="result-card">
+                    <div class="hud-label">解密得分</div>
+                    <div class="result-val" id="res-score">100 分</div>
+                </div>
+                <div class="result-card result-card-wide">
+                    <div class="hud-label">解密耗時</div>
+                    <div class="result-val" id="res-time" style="color: var(--neon-blue);">00:00.000 秒</div>
+                </div>
+            </div>
+
+            <button class="cyber-btn confirm-btn" id="restart-game-btn" style="max-width: 300px; margin: 20px auto 0 auto;">再玩一次</button>
+
+            <!-- 總排名 Leaderboard（假資料展示用，待後端串接） -->
+            <div class="leaderboard-panel">
+                <div class="terminal-title">> 總排名</div>
+                <div class="leaderboard-table">
+                    <div class="leaderboard-row leaderboard-head-row">
+                        <span class="lb-col lb-col-rank">排名</span>
+                        <span class="lb-col lb-col-name">名稱</span>
+                        <span class="lb-col lb-col-time">計時</span>
+                        <span class="lb-col lb-col-score">分數</span>
+                    </div>
+                    <div class="leaderboard-list" id="leaderboard-list-box">
+                        <!-- Dynamically populated by renderLeaderboard() -->
+                    </div>
+                </div>
+                <div class="leaderboard-stats" id="leaderboard-stats-box">目前共 <span class="lb-stat-num">--</span> 人參加，共玩 <span class="lb-stat-num">--</span> 次</div>
+            </div>
+
+            <!-- Detail list of 10 questions -->
+            <div class="history-panel">
+                <div class="terminal-title">> 磁區修復明細</div>
+                <div class="history-list" id="history-list-box">
+                    <!-- Dynamically populated -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Commander Alert Modal -->
+    <div class="commander-overlay-mask" id="commander-alert-overlay" style="display: none;">
+        <div class="commander-modal-panel">
+            <div class="terminal-title" style="color: var(--neon-gold); border-color: var(--neon-gold); margin-bottom: 20px;">
+                > 核心提示 // 網安指揮中心連線中...
+            </div>
+            <div class="commander-avatar-wrapper">
+                <img src="assets/images/S2_m1_commander_haed.png" alt="Commander Aya" class="commander-avatar-img">
+            </div>
+            <div class="commander-title">網安指揮官 方口獅</div>
+            <div class="commander-message-text">
+                「特工注意！病毒變得更狡猾了，它釋放了偽裝代碼！其中只有 1 個是真的病毒（錯誤拚音），其他都是干擾你的假警示喔！」
+            </div>
+            <button class="cyber-btn confirm-btn" id="dismiss-commander-btn" style="max-width: 250px; margin: 0 auto;">繼續修復</button>
+        </div>
+    </div>
+
+    <!-- Core Game Logic -->
+    <script src="pinyinModifier.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
