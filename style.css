@@ -20,6 +20,7 @@
     margin: 0;
     padding: 0;
     user-select: none;
+    touch-action: manipulation;
 }
 
 body {
@@ -33,6 +34,7 @@ body {
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+    touch-action: manipulation;
 }
 
 /* CRT Scanline & Grid Effect Overlay */
