@@ -1110,7 +1110,7 @@ const STORY_SCENES = [
     {
         speaker: "系統",
         avatar: "assets/images/story-system-head.png",
-        figure: "assets/images/story-terminal.png",
+        figure: "assets/images/story-terminal.webp",
         avatarAlt: "系統頭像",
         figureAlt: "系統終端機",
         figureClass: "story-figure--terminal",
@@ -1119,7 +1119,7 @@ const STORY_SCENES = [
     {
         speaker: "資安指揮官",
         avatar: "assets/images/story-commander-avatar.png",
-        figure: "assets/images/story-commander.png",
+        figure: "assets/images/story-commander.webp",
         avatarAlt: "資安指揮官頭像",
         figureAlt: "資安指揮官角色立繪",
         figureClass: "story-figure--commander",
@@ -1128,8 +1128,8 @@ const STORY_SCENES = [
     {
         speaker: "特工",
         avatar: "assets/images/story-agent-avatar.png",
-        figure: "assets/images/S2_m1_player1.png",
-        fallbackFigure: "assets/images/story-agent.png",
+        figure: "assets/images/S2_m1_player1.webp",
+        fallbackFigure: "assets/images/story-agent.webp",
         avatarAlt: "特工頭像",
         figureAlt: "特工角色立繪",
         figureClass: "story-figure--agent",

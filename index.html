@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>數據駭客 (Data Hacker) // 客語防禦戰</title>
     <meta name="description" content="一個以駭客為主題的客語學習遊戲。找出錯誤的拼音並進行修補，拯救受損的客語資料庫！">
+    <link rel="preload" as="image" href="assets/images/story-terminal.webp" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/cyber_game_bg.webp">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -40,7 +42,7 @@
             </div>
             <div class="hud-item" style="display: none;">
                 <div class="hud-label">解密計時</div>
-                <div class="hud-value" id="hud-timer-old" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.6rem; letter-spacing: 1px;">00:00.000</div>
+                <div class="hud-value" id="hud-timer-old" style="color: var(--neon-blue); font-family: var(--font-code); font-size: 1.6rem; letter-spacing: 1px;">00:00.000</div>
             </div>
         </div>
 
@@ -91,7 +93,7 @@
         <!-- 2. STORY INTRO SCREEN -->
         <div class="game-view story-view active" id="view-story" aria-live="polite">
             <div class="story-bg-layer"></div>
-            <img class="story-figure" id="story-figure-img" src="assets/images/story-terminal.png" alt="系統終端機">
+            <img class="story-figure" id="story-figure-img" src="assets/images/story-terminal.webp" alt="系統終端機" fetchpriority="high" decoding="async">
             <div class="story-dialog">
                 <div class="story-speaker">
                     <div class="story-avatar-wrap">
@@ -116,8 +118,8 @@
                 <div class="progress-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
                 <div class="progress-text" style="margin-bottom: 0;" aria-live="polite">進度：第 <span id="progress-current">1</span> / 10 題</div>
                     <div class="hud-item-mini" style="display: flex; align-items: center; gap: 6px;">
-                        <span class="hud-label-mini" style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: var(--neon-blue); text-transform: uppercase;">計時：</span>
-                        <span class="hud-value-mini" id="hud-timer" aria-label="目前計時" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px;">00:00.000</span>
+                        <span class="hud-label-mini" style="font-family: var(--font-code); font-size: 0.85rem; color: var(--neon-blue); text-transform: uppercase;">計時：</span>
+                        <span class="hud-value-mini" id="hud-timer" aria-label="目前計時" style="color: var(--neon-blue); font-family: var(--font-code); font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px;">00:00.000</span>
                     </div>
                 </div>
                 <div class="progress-track">
@@ -183,7 +185,7 @@
             <div class="terminal-title" style="color: var(--neon-red); border-color: var(--neon-red); margin: 0 auto 20px auto;">
                 > 嚴重錯誤：連線已中斷
             </div>
-            <h2 style="font-size: 2.2rem; color: var(--neon-red); margin-bottom: 10px; font-family: 'Orbitron', sans-serif;">
+            <h2 style="font-size: 2.2rem; color: var(--neon-red); margin-bottom: 10px; font-family: var(--font-display);">
                 系統完整度 0%
             </h2>
             <p style="color: #a0aec0; margin-bottom: 30px; font-size: 0.95rem;">
@@ -199,7 +201,7 @@
                 > 解密完成 // 資料庫安全已確認
             </div>
             
-            <h2 style="font-size: 2.2rem; color: var(--neon-green); margin-bottom: 20px; font-family: 'Orbitron', sans-serif;">
+            <h2 style="font-size: 2.2rem; color: var(--neon-green); margin-bottom: 20px; font-family: var(--font-display);">
                 任務結束！
             </h2>
 
@@ -208,7 +210,7 @@
             <!-- 評價評語區塊 -->
             <div class="result-comment-box" style="margin-top: 20px; padding: 15px; border: 1px solid var(--panel-border); background: rgba(0, 240, 255, 0.05); border-radius: 4px; text-align: left;">
                 <div class="hud-label" style="color: var(--neon-gold); font-size: 0.8rem; margin-bottom: 5px;">> 系統分析評價</div>
-                <div id="res-comment" style="color: var(--text-color); font-size: 1rem; line-height: 1.5; font-family: 'Share Tech Mono', monospace;">評價載入中...</div>
+                <div id="res-comment" style="color: var(--text-color); font-size: 1rem; line-height: 1.5; font-family: var(--font-code);">評價載入中...</div>
             </div>
 
             <div class="results-grid">

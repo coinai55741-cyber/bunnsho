@@ -1,5 +1,5 @@
-/* Import Cyberpunk Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+/* Import logo font only; body text uses the official Hakka-site stack below. */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
 
 :root {
     --bg-color: #07090e;
@@ -10,6 +10,16 @@
     --neon-red: #ff4f88;
     --neon-gold: #ffaa00;
     --text-color: #e2e8f0;
+    /*
+     * Official Hakka-site font stack.
+     * twhei-s and GenSekiGothic2TW-R are not bundled here yet; official-site
+     * engineers can connect their @font-face files later. Until then, the page
+     * falls back to local Traditional Chinese fonts that cover Hakka glyphs.
+     */
+    --font-hakka: "twhei-s", "GenSekiGothic2TW-R", "Noto Sans TC", "Microsoft JhengHei", "微軟正黑體", "PingFang TC", "Heiti TC", "MingLiU", "PMingLiU", "新細明體", sans-serif;
+    --font-display: "GenSekiGothic2TW-R", "twhei-s", "Noto Sans TC", "Microsoft JhengHei", "微軟正黑體", "PingFang TC", "Heiti TC", "MingLiU", "PMingLiU", "新細明體", sans-serif;
+    --font-logo: "Orbitron", "GenSekiGothic2TW-R", "twhei-s", "Noto Sans TC", "Microsoft JhengHei", "微軟正黑體", sans-serif;
+    --font-code: "Cascadia Mono", "Consolas", "Microsoft JhengHei", "微軟正黑體", "MingLiU", "PMingLiU", monospace;
     --glow-shadow-blue: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.2);
     --glow-shadow-green: 0 0 10px rgba(0, 255, 102, 0.5), 0 0 20px rgba(0, 255, 102, 0.2);
     --glow-shadow-red: 0 0 10px rgba(255, 0, 85, 0.5), 0 0 20px rgba(255, 0, 85, 0.2);
@@ -57,12 +67,12 @@ input:focus-visible,
 
 body {
     background-color: var(--bg-color);
-    background-image: linear-gradient(rgba(7, 9, 14, 0.85), rgba(7, 9, 14, 0.85)), url('assets/images/cyber_game_bg.png');
+    background-image: linear-gradient(rgba(7, 9, 14, 0.85), rgba(7, 9, 14, 0.85)), url('assets/images/cyber_game_bg.webp');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
     color: var(--text-color);
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--font-hakka);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
@@ -170,7 +180,7 @@ header {
     border-radius: 0 24px 0 0;
     color: var(--text-color);
     background: rgba(7, 9, 14, 0.84);
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--font-hakka);
     font-size: 0.72rem;
     font-weight: 800;
     cursor: pointer;
@@ -212,7 +222,7 @@ header {
 }
 
 .glitch-title {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-logo);
     font-size: 2.5rem;
     font-weight: 900;
     text-transform: uppercase;
@@ -227,7 +237,7 @@ header {
 }
 
 .sub-title {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.95rem;
     color: var(--neon-blue);
     opacity: 0.85;
@@ -253,7 +263,7 @@ header {
 }
 
 .hud-label {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.75rem;
     color: var(--neon-blue);
     text-transform: uppercase;
@@ -262,7 +272,7 @@ header {
 }
 
 .hud-value {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.3rem;
     font-weight: 700;
 }
@@ -303,7 +313,7 @@ header {
 }
 
 .terminal-title {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     color: var(--neon-green);
     margin-bottom: 15px;
     font-size: 1.1rem;
@@ -318,7 +328,7 @@ header {
 
 .input-label {
     display: block;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.85rem;
     margin-bottom: 8px;
     color: var(--neon-blue);
@@ -331,7 +341,7 @@ header {
     border-radius: 4px;
     padding: 12px;
     color: #fff;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--font-hakka);
     font-size: 1rem;
     outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
@@ -390,7 +400,7 @@ header {
     background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(0, 240, 255, 0.05));
     border: 1px solid var(--neon-blue);
     color: var(--neon-blue);
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.1rem;
     font-weight: 700;
     padding: 14px;
@@ -496,7 +506,7 @@ header {
 .audio-waveform .wave-bar:nth-child(6) { animation-delay: 0.6s; }
 
 .audio-label {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.8rem;
     color: #a0aec0;
 }
@@ -532,7 +542,7 @@ header {
 }
 
 .word-pinyin {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.85rem;
     color: #a0aec0;
     margin-bottom: 6px;
@@ -618,7 +628,7 @@ header {
 }
 
 .patch-header {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.85rem;
     color: var(--neon-blue);
     margin-bottom: 12px;
@@ -638,7 +648,7 @@ header {
     border-radius: 4px;
     padding: 12px;
     color: #fff;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -659,7 +669,7 @@ header {
     justify-content: center;
     font-weight: 700;
     font-size: 1.1rem;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
 }
 
 .feedback-text {
@@ -715,7 +725,7 @@ header {
 }
 
 .translation-label {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.7rem;
     color: var(--neon-blue);
     margin-bottom: 2px;
@@ -775,7 +785,7 @@ header {
 }
 
 .result-val {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-display);
     font-size: 2rem;
     font-weight: 700;
     color: var(--neon-blue);
@@ -948,7 +958,7 @@ header {
     inset: 0;
     background:
         linear-gradient(rgba(7, 9, 14, 0.18), rgba(7, 9, 14, 0.55)),
-        url('assets/images/cyber_game_bg.png') center / cover no-repeat;
+        url('assets/images/cyber_game_bg.webp') center / cover no-repeat;
     filter: saturate(1.15) contrast(1.05);
 }
 
@@ -985,7 +995,7 @@ header {
     padding: 0 8px;
     border: 0;
     border-radius: 999px;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--font-hakka);
     font-size: 0.72rem;
     font-weight: 800;
     color: #fff;
@@ -1041,7 +1051,7 @@ header {
 }
 
 .story-signal-pill {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.85rem;
     color: var(--neon-blue);
     background: rgba(7, 9, 14, 0.68);
@@ -1201,7 +1211,7 @@ header {
     color: var(--text-color);
     background: rgba(7, 9, 14, 0.72);
     font-weight: 800;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--font-hakka);
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -1229,7 +1239,7 @@ header {
     color: var(--neon-blue);
     margin-bottom: 8px;
     text-transform: uppercase;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     letter-spacing: 0.5px;
 }
 
@@ -1264,7 +1274,7 @@ header {
 }
 
 .progress-text {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 1.05rem;
     color: var(--neon-blue);
     margin-bottom: 8px;
@@ -1311,7 +1321,7 @@ header {
 }
 
 .leaderboard-head-row {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.8rem;
     color: var(--neon-blue);
     text-transform: uppercase;
@@ -1323,7 +1333,7 @@ header {
 
 .lb-col-time {
     text-align: left;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     color: #a0aec0;
     font-size: 0.85rem;
 }
@@ -1375,7 +1385,7 @@ header {
 }
 
 .lb-rank-num {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
 }
 
@@ -1384,7 +1394,7 @@ header {
 }
 
 .lb-row .lb-col-score {
-    font-family: 'Orbitron', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
     color: var(--neon-blue);
 }
@@ -1427,7 +1437,7 @@ header {
 .lb-ellipsis {
     text-align: center;
     color: #64748b;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     letter-spacing: 3px;
     padding: 2px 0;
 }
@@ -1435,7 +1445,7 @@ header {
 .leaderboard-stats {
     margin-top: 14px;
     text-align: center;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 1.6rem;
     color: #a0aec0;
 }
@@ -1500,7 +1510,7 @@ header {
 }
 
 .history-q-num {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-size: 0.85rem;
     color: var(--neon-gold);
     font-weight: 700;
@@ -1515,7 +1525,7 @@ header {
     font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.2s ease;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--font-hakka);
 }
 
 .history-play-btn:hover {
@@ -1552,7 +1562,7 @@ header {
 
 .history-details {
     font-size: 0.85rem;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     color: #cbd5e1;
     display: flex;
     align-items: center;
@@ -1561,7 +1571,7 @@ header {
 .detail-label {
     color: #64748b;
     margin-right: 4px;
-    font-family: 'Noto Sans TC', sans-serif;
+    font-family: var(--font-hakka);
 }
 
 .detail-val.incorrect {
@@ -1590,7 +1600,7 @@ header {
 #patch-indicator, 
 #res-comment,
 .rank {
-    font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", "Microsoft JhengHei", "微軟正黑體", Arial, sans-serif !important;
+    font-family: var(--font-hakka) !important;
 }
 
 /* ==========================================================================
@@ -1611,7 +1621,7 @@ header {
     color: var(--neon-gold);
     font-size: 0.85rem;
     margin-bottom: 12px;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     letter-spacing: 1px;
     display: flex;
     align-items: center;
@@ -1635,7 +1645,7 @@ header {
     color: var(--text-color);
     opacity: 0.7;
     margin-bottom: 4px;
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
 }
 
 .cyber-select {
@@ -1714,7 +1724,7 @@ header {
 
 .commander-title {
     color: var(--neon-gold);
-    font-family: 'Share Tech Mono', monospace;
+    font-family: var(--font-code);
     font-weight: bold;
     font-size: 1.1rem;
     letter-spacing: 1px;
