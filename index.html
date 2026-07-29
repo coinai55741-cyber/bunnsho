@@ -2,14 +2,14 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>數據駭客 (Data Hacker) // 客語防禦戰</title>
     <meta name="description" content="一個以駭客為主題的客語學習遊戲。找出錯誤的拼音並進行修補，拯救受損的客語資料庫！">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Global Toolbar -->
-    <div class="story-toolbar global-toolbar">
+    <div class="story-toolbar global-toolbar" role="toolbar" aria-label="遊戲工具列">
         <button class="story-toolbar-btn return-list-btn" id="global-return-list-btn" type="button" aria-label="返回列表">
             <img src="assets/images/ui-return-back.png" alt="" aria-hidden="true">
             <span>返回列表</span>
@@ -46,7 +46,7 @@
 
         <!-- 1. START SCREEN -->
         <div class="cyber-panel game-view" id="view-start" style="text-align: center;">
-            <div class="terminal-title">> 系統數據修復協定已啟動...</div>
+            <div class="terminal-title" aria-live="polite">> 系統數據修復協定已啟動...</div>
             
             <div class="intro-media">
                 <img src="assets/images/retro_cyber_radio.png" class="retro-radio-img" alt="復古唱片收音機">
@@ -74,6 +74,7 @@
                     <span>> 選擇要修復的腔調數據庫 (Dialect)</span>
                 </div>
                 <div class="select-group">
+                    <label class="sr-only" for="game-dialect-select">選擇要修復的腔調數據庫</label>
                     <select id="game-dialect-select" class="cyber-select">
                         <option value="sixian">四縣腔 (Sixian)</option>
                         <option value="hailu">海陸腔 (Hailu)</option>
@@ -91,11 +92,11 @@
         <!-- 2. STORY INTRO SCREEN -->
         <div class="game-view story-view active" id="view-story" aria-live="polite">
             <div class="story-bg-layer"></div>
-            <img class="story-figure" id="story-figure-img" src="assets/images/story-terminal.png" alt="">
+            <img class="story-figure" id="story-figure-img" src="assets/images/story-terminal.png" alt="系統終端機">
             <div class="story-dialog">
                 <div class="story-speaker">
                     <div class="story-avatar-wrap">
-                        <img id="story-avatar-img" src="assets/images/story-system-head.png" alt="">
+                        <img id="story-avatar-img" src="assets/images/story-system-head.png" alt="系統頭像">
                     </div>
                     <div class="story-speaker-name" id="story-speaker-name">系統</div>
                 </div>
@@ -114,10 +115,10 @@
             <!-- Central Progress Indicator -->
             <div class="progress-indicator">
                 <div class="progress-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 8px;">
-                    <div class="progress-text" style="margin-bottom: 0;">進度：第 <span id="progress-current">1</span> / 10 題</div>
+                <div class="progress-text" style="margin-bottom: 0;" aria-live="polite">進度：第 <span id="progress-current">1</span> / 10 題</div>
                     <div class="hud-item-mini" style="display: flex; align-items: center; gap: 6px;">
                         <span class="hud-label-mini" style="font-family: 'Share Tech Mono', monospace; font-size: 0.85rem; color: var(--neon-blue); text-transform: uppercase;">計時：</span>
-                        <span class="hud-value-mini" id="hud-timer" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px;">00:00.000</span>
+                        <span class="hud-value-mini" id="hud-timer" aria-label="目前計時" style="color: var(--neon-blue); font-family: 'Share Tech Mono', monospace; font-size: 1.15rem; font-weight: 700; letter-spacing: 0.5px;">00:00.000</span>
                     </div>
                 </div>
                 <div class="progress-track">
@@ -147,7 +148,7 @@
             </div>
 
             <!-- Main Data Sentence rendering -->
-            <div class="sentence-container" id="sentence-box">
+            <div class="sentence-container" id="sentence-box" aria-live="polite">
                 <!-- Word Cards will be dynamically injected here -->
             </div>
 
@@ -155,18 +156,18 @@
             <div class="patch-panel" id="patch-terminal">
                 <div class="patch-header">
                     <span>> 修補終端 // 選擇修正補丁</span>
-                    <span id="patch-card-indicator" style="color: var(--neon-gold);">已選擇字卡：無</span>
+                    <span id="patch-card-indicator" aria-live="polite" style="color: var(--neon-gold);">已選擇字卡：無</span>
                 </div>
                 <div class="patch-options" id="options-box">
-                    <button class="patch-opt-btn">Patch A</button>
-                    <button class="patch-opt-btn">Patch B</button>
-                    <button class="patch-opt-btn">Patch C</button>
-                    <button class="patch-opt-btn">Patch D</button>
+                    <button class="patch-opt-btn" aria-label="修復選項 A">Patch A</button>
+                    <button class="patch-opt-btn" aria-label="修復選項 B">Patch B</button>
+                    <button class="patch-opt-btn" aria-label="修復選項 C">Patch C</button>
+                    <button class="patch-opt-btn" aria-label="修復選項 D">Patch D</button>
                 </div>
             </div>
 
             <!-- Feedback Overlay -->
-            <div class="feedback-overlay">
+            <div class="feedback-overlay" aria-live="polite">
                 <span class="feedback-text" id="feedback-display">偵測到受損代碼</span>
             </div>
 
@@ -266,7 +267,7 @@
                 > 核心提示 // 資安指揮中心連線中...
             </div>
             <div class="commander-avatar-wrapper">
-                <img src="assets/images/S2_m1_commander_haed.png" alt="Commander Aya" class="commander-avatar-img">
+                <img src="assets/images/S2_m1_commander_haed.png" alt="資安指揮官方口獅" class="commander-avatar-img">
             </div>
             <div class="commander-title">資安指揮官 方口獅</div>
             <div class="commander-message-text">

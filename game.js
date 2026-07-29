@@ -1111,6 +1111,8 @@ const STORY_SCENES = [
         speaker: "系統",
         avatar: "assets/images/story-system-head.png",
         figure: "assets/images/story-terminal.png",
+        avatarAlt: "系統頭像",
+        figureAlt: "系統終端機",
         figureClass: "story-figure--terminal",
         text: "系統提示：「警告！客語數據磁區 01 正在遭受 Glitch-Virus 病毒覆寫...」"
     },
@@ -1118,6 +1120,8 @@ const STORY_SCENES = [
         speaker: "資安指揮官",
         avatar: "assets/images/story-commander-avatar.png",
         figure: "assets/images/story-commander.png",
+        avatarAlt: "資安指揮官頭像",
+        figureAlt: "資安指揮官角色立繪",
         figureClass: "story-figure--commander",
         text: "特工！資料庫的數位拼音代碼被病毒感染損毀了。\n我們只剩下微弱的類比語音備份訊號。"
     },
@@ -1126,6 +1130,8 @@ const STORY_SCENES = [
         avatar: "assets/images/story-agent-avatar.png",
         figure: "assets/images/S2_m1_player1.png",
         fallbackFigure: "assets/images/story-agent.png",
+        avatarAlt: "特工頭像",
+        figureAlt: "特工角色立繪",
         figureClass: "story-figure--agent",
         text: "請幫我播放備份語音，我會找出螢幕上被竄改的代碼，並用修正補丁覆寫它。"
     }
@@ -1294,10 +1300,10 @@ function renderStoryScene() {
             storyFigureImg.src = scene.fallbackFigure;
         }
     };
-    storyFigureImg.alt = scene.speaker;
+    storyFigureImg.alt = scene.figureAlt || scene.speaker;
     storyFigureImg.className = `story-figure ${scene.figureClass}`;
     storyAvatarImg.src = scene.avatar;
-    storyAvatarImg.alt = scene.speaker;
+    storyAvatarImg.alt = scene.avatarAlt || scene.speaker;
     storySpeakerName.innerText = scene.speaker;
     storyCopy.innerText = scene.text;
 
@@ -2558,6 +2564,9 @@ function loadQuestion(index) {
 
 
             card.className = 'word-card';
+            card.tabIndex = 0;
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-label', `字卡 ${w.char}，拼音 ${w.current_pinyin}`);
 
 
 
@@ -2634,6 +2643,20 @@ function loadQuestion(index) {
 
 
             card.addEventListener('click', () => handleWordCardClick(card, wIdx));
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    handleWordCardClick(card, wIdx);
+                }
+                if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                    event.preventDefault();
+                    moveFocusWithin(sentenceBox, '.word-card[role="button"]', card, 1);
+                }
+                if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                    event.preventDefault();
+                    moveFocusWithin(sentenceBox, '.word-card[role="button"]', card, -1);
+                }
+            });
 
 
 
@@ -2739,6 +2762,18 @@ function handleWordCardClick(cardEl, wordIndex) {
     }
 }
 
+function moveFocusWithin(container, selector, currentElement, direction) {
+    if (!container) return;
+
+    const items = Array.from(container.querySelectorAll(selector))
+        .filter(item => !item.disabled && item.tabIndex !== -1);
+    const currentIndex = items.indexOf(currentElement);
+    if (currentIndex === -1 || items.length === 0) return;
+
+    const nextIndex = (currentIndex + direction + items.length) % items.length;
+    items[nextIndex].focus();
+}
+
 function renderOptions() {
 
 
@@ -2760,10 +2795,21 @@ function renderOptions() {
 
 
         btn.innerText = opt;
+        btn.setAttribute('aria-label', `修復選項：${opt}`);
 
 
 
         btn.addEventListener('click', () => handleApplyPatch(opt));
+        btn.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                event.preventDefault();
+                moveFocusWithin(optionsBox, '.patch-opt-btn', btn, 1);
+            }
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                event.preventDefault();
+                moveFocusWithin(optionsBox, '.patch-opt-btn', btn, -1);
+            }
+        });
 
 
 
