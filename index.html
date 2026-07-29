@@ -61,9 +61,8 @@
                     <div class="rule-title">🎧 特工任務說明</div>
                     <ul class="rule-list">
                         <li><strong>1. </strong>播放播音鈕，聆聽客語聲音</li>
-                        <li><strong>2. </strong>箭頭比對除錯，檢查拼音字卡</li>
-                        <li><strong>3. </strong>點選錯誤字卡（每題只有 1 個錯誤喔！），並在下方補丁區選擇正確拼字字母還原</li>
-                        <li><strong>4. 關卡題數：</strong>總共 10 題，每題 10 分，共 100 分（一題最多錯 5 次喔！）</li>
+                        <li><strong>2. </strong>點選錯誤字卡（每題只有 1 個錯誤喔！），並在下方補丁區選擇正確拼字字母還原</li>
+                        <li><strong>3. 關卡題數：</strong>總共 10 題，每題 10 分，共 100 分（一題最多錯 5 次喔！）</li>
                     </ul>
                 </div>
             </div>
@@ -71,17 +70,17 @@
             <!-- 腔調選擇器 (Dialect Selector Only) -->
             <div class="lesson-selector-container">
                 <div class="lesson-selector-title">
-                    <span>> 選擇要修復的腔調數據庫 (Dialect)</span>
+                    <span>> 選擇要修復的腔調數據庫</span>
                 </div>
                 <div class="select-group">
                     <label class="sr-only" for="game-dialect-select">選擇要修復的腔調數據庫</label>
                     <select id="game-dialect-select" class="cyber-select">
-                        <option value="sixian">四縣腔 (Sixian)</option>
-                        <option value="hailu">海陸腔 (Hailu)</option>
-                        <option value="dabu">大埔腔 (Dabu)</option>
-                        <option value="raoping">饒平腔 (Raoping)</option>
-                        <option value="zhaoan">詔安腔 (Zhaoan)</option>
-                        <option value="southsixian">南四縣腔 (Southsixian)</option>
+                        <option value="sixian">四縣腔</option>
+                        <option value="hailu">海陸腔</option>
+                        <option value="dabu">大埔腔</option>
+                        <option value="raoping">饒平腔</option>
+                        <option value="zhaoan">詔安腔</option>
+                        <option value="southsixian">南四縣腔</option>
                     </select>
                 </div>
             </div>
@@ -243,7 +242,7 @@
                         <span class="lb-col lb-col-time">計時</span>
                         <span class="lb-col lb-col-score">分數</span>
                     </div>
-                    <div class="leaderboard-list" id="leaderboard-list-box">
+                    <div class="leaderboard-list" id="leaderboard-list-box" role="list" aria-label="總排名列表">
                         <!-- Dynamically populated by renderLeaderboard() -->
                     </div>
                 </div>

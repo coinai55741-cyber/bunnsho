@@ -1141,6 +1141,35 @@ const STORY_SCENES = [
 
 let storySceneIndex = 0;
 
+const storyImagePreloadCache = new Map();
+
+function preloadImage(src) {
+    if (!src) return Promise.resolve();
+    if (storyImagePreloadCache.has(src)) return storyImagePreloadCache.get(src);
+
+    const preloadPromise = new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(src);
+        img.onerror = () => resolve(src);
+        img.src = src;
+    });
+
+    storyImagePreloadCache.set(src, preloadPromise);
+    return preloadPromise;
+}
+
+function preloadStoryImages() {
+    STORY_SCENES.forEach(scene => {
+        preloadImage(scene.figure);
+        preloadImage(scene.fallbackFigure);
+        preloadImage(scene.avatar);
+    });
+}
+
+function waitForStoryTransitionDelay() {
+    return new Promise(resolve => setTimeout(resolve, 220));
+}
+
 
 
 
@@ -1319,8 +1348,14 @@ function transitionStoryScene(nextIndex) {
         return;
     }
 
+    const nextScene = STORY_SCENES[nextIndex];
     storyFigureImg.classList.add('scene-leaving');
-    setTimeout(() => {
+
+    Promise.all([
+        preloadImage(nextScene?.figure),
+        preloadImage(nextScene?.avatar),
+        waitForStoryTransitionDelay()
+    ]).then(() => {
         storySceneIndex = nextIndex;
         renderStoryScene();
         storyFigureImg.classList.remove('scene-leaving');
@@ -1328,7 +1363,7 @@ function transitionStoryScene(nextIndex) {
         requestAnimationFrame(() => {
             storyFigureImg.classList.remove('scene-entering');
         });
-    }, 220);
+    });
 }
 
 
@@ -3456,9 +3491,9 @@ const DUMMY_LEADERBOARD = [
 const DUMMY_STATS = { participants: 1905, plays: 5051 };
 
 const LB_MEDALS = {
-    1: '<img src="assets/ui/icon_rank1.png" class="lb-medal-img" alt="">',
-    2: '<img src="assets/ui/icon_rank2.png" class="lb-medal-img" alt="">',
-    3: '<img src="assets/ui/icon_rank3.png" class="lb-medal-img" alt="">'
+    1: '<img src="assets/ui/icon_rank1.png" class="lb-medal-img" alt="第 1 名金牌">',
+    2: '<img src="assets/ui/icon_rank2.png" class="lb-medal-img" alt="第 2 名銀牌">',
+    3: '<img src="assets/ui/icon_rank3.png" class="lb-medal-img" alt="第 3 名銅牌">'
 };
 
 function formatLeaderboardTime(totalSeconds) {
@@ -3481,9 +3516,13 @@ function renderLeaderboard(playerScore, playerTimeSeconds = 0) {
         const rank = idx + 1;
         const row = document.createElement('div');
         row.className = `leaderboard-row lb-row ${rank <= 3 ? 'rank-' + rank : ''}`;
-        const rankContent = LB_MEDALS[rank] ? `<span class="lb-medal">${LB_MEDALS[rank]}</span>` : rank;
+        row.setAttribute('role', 'listitem');
+        row.setAttribute('aria-label', `第 ${rank} 名，${entry.name}，計時 ${formatLeaderboardTime(entry.time)}，分數 ${entry.score}`);
+        const rankContent = LB_MEDALS[rank]
+            ? `<span class="lb-medal" aria-label="第 ${rank} 名">${LB_MEDALS[rank]}<span class="sr-only">第 ${rank} 名</span></span>`
+            : `<span aria-label="第 ${rank} 名">${rank}</span>`;
         row.innerHTML = `
-            <span class="lb-col lb-rank-num">${rankContent}</span>
+            <span class="lb-col lb-rank-num lb-rank-focus" tabindex="0" aria-label="第 ${rank} 名，${entry.name}，計時 ${formatLeaderboardTime(entry.time)}，分數 ${entry.score}">${rankContent}</span>
             <span class="lb-col lb-col-name">${entry.name}</span>
             <span class="lb-col lb-col-time">${formatLeaderboardTime(entry.time)}</span>
             <span class="lb-col lb-col-score">${entry.score}</span>
@@ -3501,8 +3540,10 @@ function renderLeaderboard(playerScore, playerTimeSeconds = 0) {
 
     const selfRow = document.createElement('div');
     selfRow.className = 'leaderboard-row lb-row self-rank';
+    selfRow.setAttribute('role', 'listitem');
+    selfRow.setAttribute('aria-label', `你的排名第 ${selfRank} 名，計時 ${formatLeaderboardTime(playerTimeSeconds)}，分數 ${playerScore}`);
     selfRow.innerHTML = `
-        <span class="lb-col lb-rank-num">${selfRank}</span>
+        <span class="lb-col lb-rank-num lb-rank-focus" tabindex="0" aria-label="你的排名第 ${selfRank} 名，計時 ${formatLeaderboardTime(playerTimeSeconds)}，分數 ${playerScore}">${selfRank}</span>
         <span class="lb-col lb-col-name">你</span>
         <span class="lb-col lb-col-time">${formatLeaderboardTime(playerTimeSeconds)}</span>
         <span class="lb-col lb-col-score">${playerScore}</span>
@@ -4477,6 +4518,10 @@ async function initLessonSelector() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+
+
+
+    preloadStoryImages();
 
 
 
