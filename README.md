@@ -13,7 +13,7 @@
 - 音樂音效：`assets/music/`
 - UI 圖示：`assets/ui/`
 
-目前正式部署來源以 `D:\Yezi\G_project\S2_mission_game\bunnsho_v2` 為主。
+
 
 ## 目前遊戲流程
 
