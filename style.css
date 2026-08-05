@@ -920,7 +920,7 @@ header {
 
 .story-box {
     text-align: left;
-    max-width: 600px;
+    max-width: 720px;
     margin: 20px auto;
     background: rgba(0, 0, 0, 0.45);
     border: 1px solid rgba(0, 240, 255, 0.15);
@@ -930,8 +930,8 @@ header {
 }
 
 .story-text {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 1.425rem;
+    line-height: 1.7;
     color: #cbd5e1;
     margin-bottom: 15px;
 }
@@ -1234,10 +1234,10 @@ header {
 }
 
 .rule-title {
-    font-size: 0.95rem;
+    font-size: 1.425rem;
     font-weight: 700;
     color: var(--neon-blue);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     text-transform: uppercase;
     font-family: var(--font-code);
     letter-spacing: 0.5px;
@@ -1249,12 +1249,12 @@ header {
 }
 
 .rule-list li {
-    font-size: 0.85rem;
-    line-height: 1.5;
+    font-size: 1.275rem;
+    line-height: 1.65;
     color: #94a3b8;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     position: relative;
-    padding-left: 18px;
+    padding-left: 22px;
 }
 
 .rule-list li::before {
