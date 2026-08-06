@@ -1127,7 +1127,7 @@ const STORY_SCENES = [
     },
     {
         speaker: "特工",
-        avatar: "assets/images/story-agent-avatar.png",
+        avatar: "assets/images/story-agent-avatar.png?v=2",
         figure: "assets/images/S2_m1_player1.webp",
         fallbackFigure: "assets/images/story-agent.webp",
         avatarAlt: "特工頭像",
